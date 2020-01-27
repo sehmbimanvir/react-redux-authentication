@@ -1,0 +1,47 @@
+@import '~antd/dist/antd.css';
+
+/** Spacing Utilities */
+.m0 {margin: 0;}
+.p0 {padding: 0;}
+/** End Spacing Utilities */
+
+/** Grid Utilities  */
+.float-right {float: right;}
+.float-left {float: left;}
+.float-none {float: none;}
+.clearfix {clear: both;}
+/** End Grid Utilities */
+
+/** Typography */
+.text-center {text-align: center;}
+
+/** Navbar */
+.custom-navbar {
+    background: #f6f6f6;
+    > .ant-menu-item {
+        &.navbar-brand {
+            padding: 0;
+            > a {
+                color: #272727;
+                font-weight: 500;
+                font-size: 22px;
+            }
+            &:hover {
+                border-bottom: 0;
+            }
+        }
+        &.ant-menu-item-selected {
+            border-bottom: 0;
+            > a {
+                color: rgba(0, 0, 0, 0.65);
+            }
+        }
+        >.anticon {
+            margin-right: 3px;
+        }
+        >.active {
+            font-weight: bold;
+        }
+    }
+}
+/** End Navbar */
