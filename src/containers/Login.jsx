@@ -1,10 +1,12 @@
 import React from 'react'
 import Boxed from '../shared/Boxed'
-import { Row, Col, Form, Input, Icon, Typography, Button } from 'antd'
+import { Row, Col, Form, Input, Icon, Typography, Button, Alert } from 'antd'
+import { connect } from 'react-redux'
+import { login } from '../store/actions/auth.action'
 
 const { Title } = Typography
 
-const Login = ({ form }) => {
+const Login = ({ form, login, loading, error }) => {
 
   const { getFieldDecorator } = form
 
@@ -12,10 +14,11 @@ const Login = ({ form }) => {
     e.preventDefault()
     form.validateFields((err, values) => {
       if (!err) {
-        console.log(values)
+        login({ name: 'Manvir' })
       }
     })
   }
+  console.log('Loading', loading)
   return (
     <Boxed>
       <Row className='login-form'>
@@ -39,13 +42,21 @@ const Login = ({ form }) => {
             </Form.Item>
 
             <Form.Item>
-              <Button htmlType='submit' type='primary'>Login</Button>
+              <Button loading={loading} htmlType='submit' type='primary'>Login</Button>
             </Form.Item>
           </Form>
+          {error && <Alert type='error' message='Something Went Wrong' />}
         </Col>
       </Row>
     </Boxed>
   )
 }
 
-export default Form.create({ name: 'login-form' })(Login)
+const mapDispatchToProps = { login }
+
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  error: state.auth.errormsg
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'login-form' })(Login))

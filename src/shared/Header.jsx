@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Menu, Icon } from 'antd'
 import Boxed from './Boxed'
-import Link from '../components/Link'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
@@ -11,6 +11,12 @@ const Header = () => {
           <Menu className='custom-navbar' mode="horizontal">
             <Menu.Item className='navbar-brand'>
               <Link to="/">Brand</Link>
+            </Menu.Item>
+
+            <Menu.Item className='float-right'>
+              <Link to="/register">
+                <Icon type='plus' /> Logout
+                </Link>
             </Menu.Item>
 
             <Menu.Item className='float-right'>
