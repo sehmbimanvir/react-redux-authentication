@@ -1,8 +1,9 @@
-import { authenticate } from "../../services/auth.service"
+import { authenticate, logout } from "../../services/auth.service"
 
 export const FETCH_LOGIN_START = 'FETCH_LOGIN_START'
 export const FETCH_LOGIN_SUCCESS = 'FETCH_LOGIN_SUCCESS'
 export const FETCH_LOGIN_FAILURE = 'FETCH_LOGIN_FAILURE'
+export const LOGGED_OUT = 'LOGGED_OUT'
 
 const loggedIn = payload => ({
     type: FETCH_LOGIN_SUCCESS,
@@ -21,6 +22,14 @@ export const login = credentials => {
             dispatch(loggedIn(response))
         }).catch(err => {
             dispatch(loginFailed(err))
+        })
+    }
+}
+
+export const setLogout = () => {
+    return dispatch => {
+        logout().then(response => {
+            dispatch({type: LOGGED_OUT})
         })
     }
 }

@@ -6,7 +6,7 @@ import { login } from '../store/actions/auth.action'
 
 const { Title } = Typography
 
-const Login = ({ form, login, loading, error }) => {
+const Login = ({ form, login, loading, error, success }) => {
 
   const { getFieldDecorator } = form
 
@@ -18,7 +18,7 @@ const Login = ({ form, login, loading, error }) => {
       }
     })
   }
-  console.log('Loading', loading)
+
   return (
     <Boxed>
       <Row className='login-form'>
@@ -46,6 +46,7 @@ const Login = ({ form, login, loading, error }) => {
             </Form.Item>
           </Form>
           {error && <Alert type='error' message='Something Went Wrong' />}
+          {success && <Alert type='success' message={success} />}
         </Col>
       </Row>
     </Boxed>
@@ -56,7 +57,8 @@ const mapDispatchToProps = { login }
 
 const mapStateToProps = state => ({
   loading: state.auth.loading,
-  error: state.auth.errormsg
+  error: state.auth.errormsg,
+  success: state.auth.successmsg
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'login-form' })(Login))

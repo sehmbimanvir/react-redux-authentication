@@ -1,10 +1,17 @@
 import { Storage } from './storage.service'
+import { getCurrentTimestamp } from '../helpers/utils'
+
+const storageKey = {
+  user: 'user',
+  token: '__token',
+  expired: 'expired_at'
+}
 
 const staticSuccessResponse = {
   user: {
     id: 1,
     name: 'Manvir',
-    email: 'manvir.singh@netsolutions.com',
+    email: 'manvir.singh@test.com',
   },
   token: '______token'
 }
@@ -13,8 +20,13 @@ export const authenticate = credentials => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(staticSuccessResponse)
-      // reject('Something Went Wrong')
     }, 1000)
+  })
+}
+
+export const logout = () => {
+  return new Promise((resolve, reject) => {
+    resolve({ data: 'Logged Out' })
   })
 }
 
@@ -24,28 +36,18 @@ export const setLoggedIn = data => {
   setExpiryTime(data.expired_at)
 }
 
-export const setUser = (data) => {
-  
-}
+export const setUser = data => Storage.setJson(storageKey.user, data)
 
-export const setAuthToken = token => {
-  Storage.set('_token', token)
-}
+export const setAuthToken = token => Storage.set(storageKey.token, token)
 
-export const setExpiryTime = () => {
-  const timeStamp = parseInt(Date.now()) + 7200
-  console.log('Setting Expiry Time')
-  console.log('Current Timestamp', Date.now())
-  console.log('New Timestamp', timeStamp)
-  Storage.set('expired_at', timeStamp)
-}
+export const setExpiryTime = (seconds = 7200) => Storage.set(storageKey.expired, getCurrentTimestamp() + seconds)
 
-export const getAuthToken = () => Storage.get('_token')
+export const getAuthToken = () => Storage.get(storageKey.token)
 
-export const getExpiredAt = () => Storage.get('expired_at')
+export const getExpiredAt = () => Storage.get(storageKey.expired)
 
-export const getUser = () => Storage.getJson('user')
+export const getUser = () => Storage.getJson(storageKey.user)
 
-export const isLoggedIn = () => {
-  return getAuthToken() && parseInt(Date.now()) > getExpiredAt()
-}
+export const isLoggedIn = () => getAuthToken() && getExpiredAt() > getCurrentTimestamp()
+
+export const clearUser = () => Storage.delete([storageKey.expired, storageKey.token, storageKey.user])

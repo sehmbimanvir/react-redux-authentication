@@ -1,48 +1,51 @@
-import { 
+import {
   FETCH_LOGIN_START,
   FETCH_LOGIN_SUCCESS,
-  FETCH_LOGIN_FAILURE
+  FETCH_LOGIN_FAILURE,
+  LOGGED_OUT
 } from "../actions/auth.action"
 
-import { 
+import {
   getAuthToken,
   getExpiredAt,
   getUser,
-  setLoggedIn
+  setLoggedIn,
+  clearUser,
+  isLoggedIn
 } from "../../services/auth.service"
 
 const initialState = {
   token: getAuthToken(),
   expired_at: getExpiredAt(),
-  user: getUser()
+  user: getUser(),
+  isLoggedIn: isLoggedIn()
 }
 
 const reducer = (state = initialState, action) => {
-  if (action.type === FETCH_LOGIN_START) {
-    return {
-      ...state,
-      loading: true
-    }
-  } else if (action.type === FETCH_LOGIN_SUCCESS) {
-    const {payload} = action
-    setLoggedIn(payload)
-    // setAuthToken(payload.token)
-    // setExpiryTime()
-    return {
-      ...state,
-      token: payload.token,
-      expired_at: getExpiredAt(),
-      user: payload.user,
-      loading: false
-    }
-  } else if (action.type === FETCH_LOGIN_FAILURE) {
-    return {
-      ...state,
-      errormsg: action.error,
-      loading: false
-    }
+  switch (action.type) {
+    case FETCH_LOGIN_START:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case FETCH_LOGIN_SUCCESS:
+      const { payload } = action
+      const { user, token } = payload
+      const expired_at = getExpiredAt()
+      setLoggedIn(payload)
+      return { ...state, token, expired_at, user, loading: false, isLoggedIn: true }
+
+    case LOGGED_OUT:
+      clearUser()
+      return { token: null, expired_at: null, user: {}, successmsg: 'Logged Out Successfully' }
+
+    case FETCH_LOGIN_FAILURE:
+      return { ...state, errormsg: action.error, loading: false }
+
+    default:
+      return state
   }
-  return {...state}
 }
 
 export default reducer
