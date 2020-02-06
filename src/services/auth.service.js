@@ -24,6 +24,15 @@ export const authenticate = credentials => {
   })
 }
 
+export const register = data => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({message: 'User Registered'})
+      // reject({message: 'Something Went Wrong'})
+    }, 4000)
+  })
+}
+
 export const logout = () => {
   return new Promise((resolve, reject) => {
     resolve({ data: 'Logged Out' })

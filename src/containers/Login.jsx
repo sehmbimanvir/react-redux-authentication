@@ -3,6 +3,7 @@ import Boxed from '../shared/Boxed'
 import { Row, Col, Form, Input, Icon, Typography, Button, Alert } from 'antd'
 import { connect } from 'react-redux'
 import { login } from '../store/actions/auth.action'
+import { loginRules } from '../constants/rules'
 
 const { Title } = Typography
 
@@ -26,23 +27,21 @@ const Login = ({ form, login, loading, error, success }) => {
           <Title level={3}>Login to continue...</Title>
           <Form onSubmit={handleOnSubmit}>
             <Form.Item>
-              {getFieldDecorator('email', {
-                rules: [{ required: true, message: 'Email is required' }, { email: true, message: 'Invalid Email' }]
-              })(
+              {getFieldDecorator('email', { rules: loginRules.email })(
                 <Input prefix={<Icon type='user' />} placeholder='Email' type='email' />
               )}
             </Form.Item>
 
             <Form.Item>
-              {getFieldDecorator('password', {
-                rules: [{ required: true, message: 'Password is required' }]
-              })(
+              {getFieldDecorator('password', { rules: loginRules.password })(
                 <Input prefix={<Icon type='lock' />} placeholder='Password' type='password' />
               )}
             </Form.Item>
 
             <Form.Item>
-              <Button loading={loading} htmlType='submit' type='primary'>Login</Button>
+              <Button loading={loading} htmlType='submit' type='primary'>
+                <Icon type='login' /> Login
+              </Button>
             </Form.Item>
           </Form>
           {error && <Alert type='error' message='Something Went Wrong' />}
