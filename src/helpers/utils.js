@@ -1,0 +1,1 @@
+export const getCurrentTimestamp = () => parseInt(Date.now() / 1000)
