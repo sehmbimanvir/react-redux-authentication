@@ -6,7 +6,7 @@ import { registerationRules } from '../constants/rules'
 
 const { Title } = Typography
 
-const Login = ({ form, history }) => {
+const Register = ({ form, history }) => {
 
   const { getFieldDecorator } = form
 
@@ -19,7 +19,7 @@ const Login = ({ form, history }) => {
       if (!err) {
         setLoading(true)
         register(values).then(response => {
-          message.success(response.message)
+          message.success(response.data.message)
           history.push('/login')
         }).catch(error => {
           message.error(error.message)
@@ -72,4 +72,4 @@ const Login = ({ form, history }) => {
   )
 }
 
-export default Form.create({ name: 'login-form' })(Login)
+export default Form.create({ name: 'login-form' })(Register)
