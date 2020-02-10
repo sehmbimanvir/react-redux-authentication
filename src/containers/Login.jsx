@@ -13,9 +13,9 @@ const Login = ({ form, login, loading, error, success }) => {
 
   const handleOnSubmit = e => {
     e.preventDefault()
-    form.validateFields((err, values) => {
+    form.validateFields((err, credentials) => {
       if (!err) {
-        login({ name: 'Manvir' })
+        login(credentials)
       }
     })
   }

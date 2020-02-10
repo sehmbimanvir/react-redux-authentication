@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 const axiosInstance = axios.create({
-    baseURL: 'https://google.com',
-    headers: {
-        Authorization: 'Token'
-    }
+  baseURL: 'http://localhost:3000/api/',
+  headers: {
+    Authorization: `Bearer`
+  }
 })
 
 export default axiosInstance
