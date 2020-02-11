@@ -20,6 +20,12 @@ export const setLoggedIn = data => {
   setExpiryTime(data.expired_at)
 }
 
+export const verifyResetToken = token => Http.post(`/auth/verify-reset-token/${token}`)
+
+export const resetPassword = (token, data) => Http.post(`/auth/reset/${token}`, data)
+
+export const sendForgotPasswordLink = data => Http.post('auth/forgot', data)
+
 export const setUser = data => Storage.setJson(storageKey.user, data)
 
 export const setAuthToken = token => Storage.set(storageKey.token, token)

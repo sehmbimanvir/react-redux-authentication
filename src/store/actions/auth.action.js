@@ -21,7 +21,7 @@ export const login = credentials => {
     authenticate(credentials).then(response => {
       dispatch(loggedIn(response.data.data))
     }).catch(err => {
-      dispatch(loginFailed(err))
+      dispatch(loginFailed(err.response.data.message))
     })
   }
 }
