@@ -1,9 +1,9 @@
 import React from 'react'
-import Boxed from '../shared/Boxed'
+import Boxed from '../../shared/Boxed'
 import { Row, Col, Form, Input, Icon, Typography, Button, Alert } from 'antd'
 import { connect } from 'react-redux'
-import { login } from '../store/actions/auth.action'
-import { loginRules } from '../constants/rules'
+import { login } from '../../store/actions/auth.action'
+import { loginRules } from '../../constants/rules'
 import { Link } from 'react-router-dom'
 
 const { Title } = Typography
@@ -11,7 +11,6 @@ const { Title } = Typography
 const Login = ({ form, login, loading, error, success }) => {
 
   const { getFieldDecorator } = form
-
   const handleOnSubmit = e => {
     e.preventDefault()
     form.validateFields((err, credentials) => {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Boxed from '../shared/Boxed'
+import Boxed from '../../shared/Boxed'
 import { Row, Col, Form, Input, Icon, Typography, Button, message } from 'antd'
-import { registerationRules } from '../constants/rules'
-import { verifyResetToken, resetPassword } from '../services/auth.service'
+import { registerationRules } from '../../constants/rules'
+import { verifyResetToken, resetPassword } from '../../services/auth.service'
 
 const { Title } = Typography
 

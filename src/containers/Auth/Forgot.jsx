@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Boxed from '../shared/Boxed'
+import Boxed from '../../shared/Boxed'
 import { Row, Col, Form, Input, Icon, Typography, Button, message } from 'antd'
-import { loginRules } from '../constants/rules'
-import { sendForgotPasswordLink } from '../services/auth.service'
+import { loginRules } from '../../constants/rules'
+import { sendForgotPasswordLink } from '../../services/auth.service'
 import { Link } from 'react-router-dom'
 
 const { Title } = Typography
