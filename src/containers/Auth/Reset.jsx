@@ -3,6 +3,7 @@ import Boxed from '../../shared/Boxed'
 import { Row, Col, Form, Input, Icon, Typography, Button, message } from 'antd'
 import { registerationRules } from '../../constants/rules'
 import { verifyResetToken, resetPassword } from '../../services/auth.service'
+import { validateFields } from '../../helpers/utils'
 
 const { Title } = Typography
 
@@ -17,22 +18,19 @@ const Reset = ({ form, match, history }) => {
   }, [])
 
   const { getFieldDecorator } = form
-  const handleOnSubmit = e => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault()
-    form.validateFields((err, data) => {
-      if (err)
-        return false
-
-      setLoading(true)
-      resetPassword(match.params.token, data).then(({ data }) => {
-        message.success(data.message)
-        history.push('/login')
-      }).catch(err => {
-        setLoading(false)
+    try {
+      const values = await validateFields(form)
+      const response = await resetPassword(match.params.token, values)
+      message.success(response.data.message)
+      history.push('/login')
+    } catch (err) {
+      setLoading(false)
+      if (err.response) {
         message.error(err.response.data.message)
-      })
-
-    })
+      }
+    }
   }
 
   const comparePassword = (rule, value, callback) => {

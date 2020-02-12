@@ -4,6 +4,7 @@ import { Row, Col, Form, Input, Icon, Typography, Button, message } from 'antd'
 import { loginRules } from '../../constants/rules'
 import { sendForgotPasswordLink } from '../../services/auth.service'
 import { Link } from 'react-router-dom'
+import { validateFields } from '../../helpers/utils'
 
 const { Title } = Typography
 
@@ -12,21 +13,21 @@ const Forgot = ({ form, history }) => {
   const [loading, setLoading] = useState(false)
   const { getFieldDecorator } = form
 
-  const handleOnSubmit = e => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault()
-    form.validateFields((err, data) => {
-      if (err)
-        return false
 
+    try {
       setLoading(true)
-      sendForgotPasswordLink(data).then(response => {
-        message.success(response.data.message)
-        history.push('login')
-      }).catch(err => {
-        setLoading(false)
+      const values = await validateFields(form)
+      const response = await sendForgotPasswordLink(values)
+      message.success(response.data.message)
+      history.push('login')
+    } catch (err) {
+      setLoading(false)
+      if (err.response) {
         message.error(err.response.data.message)
-      })
-    })
+      }
+    }
   }
 
   return (
