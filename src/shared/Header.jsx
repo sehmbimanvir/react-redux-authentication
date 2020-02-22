@@ -30,7 +30,7 @@ const Header = ({ isLoggedIn, logout, user }) => {
       [
         <SubMenu key="1" className='float-right' title={
           <><span className='submenu-title-wrapper'>
-            <Icon type="user" />{user.email}
+            <Icon type="user" />{user.name}
           </span> <Icon type='caret-down' /></>}>
           <Menu.ItemGroup>
             <Menu.Item key="setting:1">
