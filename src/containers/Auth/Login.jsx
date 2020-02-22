@@ -1,16 +1,16 @@
 import React from 'react'
-import Boxed from '../shared/Boxed'
+import Boxed from '../../shared/Boxed'
 import { Row, Col, Form, Input, Icon, Typography, Button, Alert } from 'antd'
 import { connect } from 'react-redux'
-import { login } from '../store/actions/auth.action'
-import { loginRules } from '../constants/rules'
+import { login } from '../../store/actions/auth.action'
+import { loginRules } from '../../constants/rules'
+import { Link } from 'react-router-dom'
 
 const { Title } = Typography
 
 const Login = ({ form, login, loading, error, success }) => {
 
   const { getFieldDecorator } = form
-
   const handleOnSubmit = e => {
     e.preventDefault()
     form.validateFields((err, credentials) => {
@@ -43,8 +43,10 @@ const Login = ({ form, login, loading, error, success }) => {
                 <Icon type='login' /> Login
               </Button>
             </Form.Item>
+
+            <Link to="forgot" >Forgot your password ?</Link>
           </Form>
-          {error && <Alert type='error' message='Something Went Wrong' />}
+          {error && <Alert type='error' message={error} />}
           {success && <Alert type='success' message={success} />}
         </Col>
       </Row>

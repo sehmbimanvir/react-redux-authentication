@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import Boxed from '../shared/Boxed'
+import Boxed from '../../shared/Boxed'
 import { Row, Col, Form, Input, Icon, Typography, Button, message } from 'antd'
-import { register } from '../services/auth.service'
-import { registerationRules } from '../constants/rules'
+import { register } from '../../services/auth.service'
+import { registerationRules } from '../../constants/rules'
+import { validateFields } from '../../helpers/utils'
 
 const { Title } = Typography
 
@@ -12,21 +13,21 @@ const Register = ({ form, history }) => {
 
   const [loading, setLoading] = useState(false)
 
-  const handleOnSubmit = e => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault()
 
-    form.validateFields((err, values) => {
-      if (!err) {
-        setLoading(true)
-        register(values).then(response => {
-          message.success(response.data.message)
-          history.push('/login')
-        }).catch(error => {
-          message.error(error.message)
-          setLoading(false)
-        })
+    try {
+      setLoading(true)
+      const values = await validateFields(form)
+      const response = await register(values)
+      message.success(response.data.message)
+      history.push('/login')
+    } catch (err) {
+      setLoading(false)
+      if (err.response) {
+        message.error(err.response.data.message)
       }
-    })
+    }
 
   }
 

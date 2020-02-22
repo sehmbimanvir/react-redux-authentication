@@ -16,13 +16,14 @@ const loginFailed = error => ({
 })
 
 export const login = credentials => {
-  return dispatch => {
+  return async dispatch => {
     dispatch({ type: FETCH_LOGIN_START })
-    authenticate(credentials).then(response => {
+    try {
+      const response = await authenticate(credentials)
       dispatch(loggedIn(response.data.data))
-    }).catch(err => {
-      dispatch(loginFailed(err))
-    })
+    } catch (err) {
+      dispatch(loginFailed(err.response.data.message))
+    }
   }
 }
 
