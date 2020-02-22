@@ -41,6 +41,12 @@ const Register = ({ form, history }) => {
           <Title level={3}>Create an account...</Title>
           <Form onSubmit={handleOnSubmit}>
             <Form.Item>
+              {getFieldDecorator('name', { rules: registerationRules.name })(
+                <Input prefix={<Icon type='user' />} placeholder='Full Name' type='text' />
+              )}
+            </Form.Item>
+
+            <Form.Item>
               {getFieldDecorator('email', { rules: registerationRules.email })(
                 <Input prefix={<Icon type='user' />} placeholder='Email' type='email' />
               )}

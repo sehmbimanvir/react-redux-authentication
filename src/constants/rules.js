@@ -9,6 +9,7 @@ export const loginRules = {
 }
 
 export const registerationRules = {
+  name: [{ required: true, message: 'Name is required.' }],
   email: [
     { required: true, message: 'Email is required' },
     { email: true, message: 'Invalid Email' }
